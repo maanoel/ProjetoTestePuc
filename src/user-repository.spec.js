@@ -1,3 +1,4 @@
+const UserRepository = require("./user-repository");
 const { MongoClient } = require("mongodb");
 
 describe("UserRepository", () => {
@@ -10,6 +11,9 @@ describe("UserRepository", () => {
       "mongodb+srv://vitor2908:33516568@clusterinicial.ga1at.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
     client = new MongoClient(uri);
     await client.connect();
+
+    collection = client.db("users_db").collection("users");
+    userRepository = new UserRepository(collection);
   });
 
   afterAll(async () => {
