@@ -20,8 +20,27 @@ describe("UserRepository", () => {
     await client.close();
   });
 
+  beforeEach(async () => {
+    await collection.deleteMany({});
+  });
+
   describe("findOneByEmail", () => {
-    test.todo("Deve retornar o usuário manoelvitorbrito@gmail.com");
+    test("Deve retornar o usuário manoelvitorbrito@gmail.com", async () => {
+      const result = await collection.insertOne({
+        name: "vitor",
+        email: "manoelvitorbrito@gmail.com",
+      });
+
+      const user = await userRepository.findOneByEmail(
+        "manoelvitorbrito@gmail.com"
+      );
+
+      expect(user).toStrictEqual({
+        _id: result.insertedId,
+        name: "vitor",
+        email: "manoelvitorbrito@gmail.com",
+      });
+    });
     test.todo("Deve lançar uma exceção para um usuário não existente");
   });
 

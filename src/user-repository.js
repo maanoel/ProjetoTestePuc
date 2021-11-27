@@ -3,7 +3,11 @@ class UserRepository {
     this.collection = collection;
   }
 
-  async findOneByEmail() {}
+  async findOneByEmail(email) {
+    const user = await this.collection.findOne({ email });
+
+    return user;
+  }
 }
 
 module.exports = UserRepository;
