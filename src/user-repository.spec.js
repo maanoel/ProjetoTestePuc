@@ -41,7 +41,14 @@ describe("UserRepository", () => {
         email: "manoelvitorbrito@gmail.com",
       });
     });
-    test.todo("Deve lançar uma exceção para um usuário não existente");
+
+    test("Deve lançar uma exceção para um usuário não existente", async () => {
+      await expect(
+        userRepository.findOneByEmail("manoelvitorbrito@gmail.com")
+      ).rejects.toThrow(
+        Error("User with email manoelvitorbrito@gmail.com does not exist")
+      );
+    });
   });
 
   describe("insert", () => {
