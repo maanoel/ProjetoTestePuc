@@ -52,7 +52,21 @@ describe("UserRepository", () => {
   });
 
   describe("insert", () => {
-    test.todo("Inserir um novo usuário");
+    test("Inserir um novo usuário", async () => {
+      const user = await userRepository.insert({
+        name: "vitor",
+        email: "manoelvitorbrito@gmail.com",
+      });
+
+      const result = await userRepository.findOneByEmail(
+        "manoelvitorbrito@gmail.com"
+      );
+
+      console.log("oi");
+      console.log("user: " + user);
+
+      expect(result).toStrictEqual(user);
+    });
   });
 
   describe("update", () => {
@@ -61,7 +75,19 @@ describe("UserRepository", () => {
   });
 
   describe("update", () => {
-    test.todo("deve remover um usuário existente");
+    test.only("deve remover um usuário existente", async () => {
+      const user = await userRepository.insert({
+        name: "vitor",
+        email: "manoelvitorbrito@gmail.com",
+      });
+
+      await userRepository.delete(user._id);
+
+      await expect(
+        userRepository.findOneByEmail("manoelvitorbrito@gmail.com")
+      ).rejects.toThrow();
+    });
+
     test.todo("deve lançar uma execeção para um usuário não existente");
   });
 

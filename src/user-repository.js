@@ -9,7 +9,17 @@ class UserRepository {
     if (user == null) {
       throw new Error(`User with email ${email} does not exist`);
     }
+
     return user;
+  }
+
+  async insert(user) {
+    const doc = await this.collection.insertOne(user);
+    return user;
+  }
+
+  async delete(id) {
+    await this.collection.deleteOne({ _id: id });
   }
 }
 
